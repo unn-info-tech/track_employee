@@ -96,8 +96,38 @@
             font-size: 0.8rem;
             margin-top: 5px;
         }
+        .messages {
+            position: fixed; /* Fixed positioning relative to the viewport */
+            top: 0; /* Align at the top of the viewport */
+            left: 50%; /* Start from the middle of the viewport */
+            transform: translateX(-50%); /* Shift it left by half its width to truly center it */
+            width: 90%;
+            max-width: 600px; /* Adjust the max width as needed */
+            z-index: 1000; /* Make sure it's above other content */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional: adds shadow for better visibility */
+            border-radius: 0; /* Optional: you might want to remove the border-radius if it's at the top */
+            margin: 10px 0; /* Add some space at the top */
+        }
+
+        .messages li {
+            padding: 10px;
+            margin: 0; /* Remove margin between items */
+            text-align: center; /* Center text inside each message */
+            color: #fff; /* White text color */
+            font-size: 0.9rem;
+        }
+
+        /* Specific styles for different message tags */
+        .messages .info { background-color: #17a2b8; }
+        .messages .success { background-color: #28a745; }
+        .messages .warning { background-color: #ffc107; color: #212529; }
+        .messages .error { background-color: #dc3545; }
+
+
+       
     </style>
 </head>
+
 <body>
     <div class="registration-container">
         <h2 class="registration-title">Регистрация</h2>
@@ -124,5 +154,13 @@
         <p class="login-link">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
         
     </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </body>
+
 </html>

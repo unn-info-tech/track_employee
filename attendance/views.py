@@ -18,24 +18,32 @@ def admin_check(user):
 
 
 def register(request):
+    context = {
+        'username': '',
+        'email': '',
+        'password': '',
+        'password_confirm': '',
+    }
+
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        password_confirm = request.POST.get('password_confirm')
-        
-        if password == password_confirm:
-            if User.objects.filter(username=username).exists():
+        context['username'] = request.POST.get('username')
+        context['email'] = request.POST.get('email')
+        context['password'] = request.POST.get('password')
+        context['password_confirm'] = request.POST.get('password_confirm')
+
+        if context['password'] == context['password_confirm']:
+            if User.objects.filter(username=context['username']).exists():
                 messages.error(request, 'Username already exists')
-            elif User.objects.filter(email=email).exists():
+            elif User.objects.filter(email=context['email']).exists():
                 messages.error(request, 'Email already registered')
             else:
-                User.objects.create_user(username=username, email=email, password=password)
-                return redirect('login')  # Redirect to login after successful registration
+                User.objects.create_user(username=context['username'], email=context['email'], password=context['password'])
+                return redirect('login')
         else:
             messages.error(request, 'Passwords do not match')
-            
-    return render(request, 'attendance/register.html')  # Render the registration page with any messages
+
+    return render(request, 'attendance/register.html', context)
+
 
 
 
