@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход или Выход</title>
+    <style>
+        body, html {
+            height: 100%; /* Полная высота окна просмотра */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center; /* Выравнивание по вертикали */
+            justify-content: center; /* Выравнивание по горизонтали */
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center; /* Центрирование текста для всего содержимого контейнера */
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"], button {
+            width: 100%; /* Полная ширина формы */
+            padding: 10px;
+            margin-top: 5px;
+        }
+        input[type="text"] {
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003580;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px; /* Отступ сверху для сообщений */
+        }
+        li {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Вы собираетесь отметить ваше {{ action|capfirst }} время</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="otp">Введите OTP (с экрана администратора):</label>
+            <input type="text" id="otp" name="otp" required>
+            <button type="submit">Подтвердить</button>
+        </form>
+        <p><a href="{% url 'dashboard' %}">Вернуться в панель управления</a></p>
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

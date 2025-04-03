@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список сотрудников</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 600px; /* Limit maximum width for better readability */
+        }
+        li {
+            background: white;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px; /* Larger font size for better readability */
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 100%; /* Ensure the container can hold the centered button */
+            text-align: center; /* Center the button within the container */
+        }
+
+        .button-link {
+            display: inline-block; /* Needed to apply width and centering correctly */
+            padding: 10px 20px;
+            color: #007bff;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 20px; /* Space above the button */
+        }
+
+        .button-link:hover {
+            background-color: #003580;
+            text-decoration: none; /* Remove underline effect on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Список сотрудников</h1>
+    <ul>
+        {% for user in users %}
+        <li>
+            <a href="{% url 'user-attendance' user.id %}">{{ user.username }}</a>
+        </li>
+        {% empty %}
+        <li>сотрудники не найдены.</li>
+        {% endfor %}
+        <div class="container">
+            <a href="{% url 'admin:index' %}" class="button-link">Вернуться к административной панели</a>
+        </div>
+    </ul>
+</body>
+</html>
