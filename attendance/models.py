@@ -12,7 +12,7 @@ class OTP(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_valid(self):
-        return timezone.now() <= self.created_at + timedelta(minutes=3)
+        return timezone.now() <= self.created_at + timedelta(minutes=2)
 
     @staticmethod
     def generate_otp():

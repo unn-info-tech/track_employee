@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .models import OTP, AttendanceRecord
@@ -53,6 +53,9 @@ def user_login(request):
             messages.error(request, "Invalid credentials. Please try again.")
     return render(request, 'attendance/login.html')
 
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 # Admin OTP Generation View
 @user_passes_test(admin_check)
